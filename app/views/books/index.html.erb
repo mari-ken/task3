@@ -1,1 +1,23 @@
-<h1>Books index</h1>
+<%= render 'users/info', user: @user %>
+<div class="col-md-3">
+<h1>Books</h1>
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Title</th>
+      <th>Opinion</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @books.each do |list| %>
+      <tr>
+        <td><%= attachment_image_tag @user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg" %></td>
+        <td><%= list.title %></td>
+        <td><%= list.body %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
