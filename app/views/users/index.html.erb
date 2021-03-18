@@ -1,1 +1,24 @@
 <%= render 'users/info', user: @user %>
+
+<div class="col-md-8">
+<h1>Users</h1>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>image</th>
+      <th>name</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |list| %>
+      <tr>
+        <td><%= attachment_image_tag list, :profile_image, :fill, 40, 40, fallback: "no_image.jpg", size: "40x40" %></td>
+        <td><%= list.name %></td>
+        <td><%= link_to "Show", user_path(list.id) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
