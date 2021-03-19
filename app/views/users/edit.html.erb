@@ -1,14 +1,38 @@
+<div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
 <h2>User info</h2>
+
 <%= form_with model:@user, local:true do |f| %>
-  <label for="name">Name</label>
-  <%= f.text_field :name, id:"name" %>
+  <% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= I18n.t("errors.messages.not_saved",
+                 count: @user.errors.count,
+                 resource: @user.class.model_name.human.downcase)
+       %>
+    </h2>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
 
-  <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg"%>
-  <label for="image">Image</label>
-  <%= f.attachment_field :profile_image, id:"image" %>
+  <div class="field">
+    <%= f.label :Name %><br />
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
 
-  <label for="introduction">Introduction</label>
-  <%= f.text_area :introduction, id:"introduction" %>
+  <div class="field">
+    <%= f.label :Image %><br />
+    <%= f.attachment_field :profile_image %>
+  </div>
 
-  <%= f.submit "変更を保存" %>
+  <div class="field">
+    <%= f.label :Introduction %><br />
+    <%= f.text_area :introduction, class: "form-control" %>
+  </div>
+
+  <%= f.submit "Update User", class: "btn btn-secondary" %>
 <% end %>
+</div>

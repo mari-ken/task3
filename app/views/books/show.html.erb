@@ -1,15 +1,18 @@
 <%= render 'users/info', user: @user %>
-<div class="col-md-3">
-<h1>book detail</h1>
-<table>
+
+<div class="col-md-8 offset-md-1">
+<h1>Book detail</h1>
+<table class="table">
   <tbody>
       <tr>
-        <td><%= attachment_image_tag @user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg" %></td>
-        <td><%= link_to @book.title, book_path(@book.id) %></td>
-        <td><%= @book.body %></td>
+        <td><%= link_to attachment_image_tag(@user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg", size: "40x40"),user_path(@user)%>
+          <br><%= link_to @user.name, user_path(@user.id) %>
+        </td>
+        <td><%= link_to @book_deta.title, book_path(@book_deta.id) %></td>
+        <td><%= @book_deta.body %></td>
         <% if @user.id == current_user.id %>
-          <td><%= link_to "Edit", edit_book_path(@book.id) %></td>
-          <td><%= link_to "Delete", book_path(@book), method: :delete %></td>
+          <td><%= link_to "Edit", edit_book_path(@book_deta.id), class: "btn btn-success btn-sm" %></td>
+          <td><%= link_to "Destroy", book_path(@book_deta), method: :delete, "data-confirm" => "本当に消しますか?", class: "btn btn-danger btn-sm" %></td>
         <% end %>
       </tr>
   </tbody>
