@@ -3,8 +3,8 @@
   <div id="error_explanation">
     <h2>
       <%= I18n.t("errors.messages.not_saved",
-             count: @book.errors.count,
-             resource: @book.class.model_name.human.downcase)
+        count: @book.errors.count,
+        resource: @book.class.model_name.human.downcase)
       %>
     </h2>
     <ul>
@@ -25,6 +25,8 @@
       <th></th>
       <th>Title</th>
       <th>Opinion</th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -34,6 +36,8 @@
         <td><%= link_to attachment_image_tag(list.user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg", size: "40x40"),user_path(list.user)%></td>
         <td><%= link_to list.title, book_path(list.id) %></td>
         <td><%= list.body %></td>
+        <td id="fav_<%= list.id %>"><%= render 'favorites/favorite', list: list %></td>
+        <td>コメント数：<%= list.book_comments.count %></td>
       </tr>
     <% end %>
   </tbody>

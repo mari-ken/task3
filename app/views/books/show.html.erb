@@ -1,20 +1,32 @@
 <%= render 'users/info', user: @user %>
 
 <div class="col-md-8 offset-md-1">
-<h1>Book detail</h1>
-<table class="table">
-  <tbody>
-      <tr>
-        <td><%= link_to attachment_image_tag(@user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg", size: "40x40"),user_path(@user)%>
-          <br><%= link_to @user.name, user_path(@user.id) %>
-        </td>
-        <td><%= link_to @book_deta.title, book_path(@book_deta.id) %></td>
-        <td><%= @book_deta.body %></td>
-        <% if @user.id == current_user.id %>
-          <td><%= link_to "Edit", edit_book_path(@book_deta.id), class: "btn btn-success btn-sm" %></td>
-          <td><%= link_to "Destroy", book_path(@book_deta), method: :delete, "data-confirm" => "本当に消しますか?", class: "btn btn-danger btn-sm" %></td>
-        <% end %>
-      </tr>
-  </tbody>
-</table>
+  <h1>Book detail</h1>
+  <table class="table">
+    <tbody>
+        <tr>
+          <td><%= link_to attachment_image_tag(@user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg", size: "40x40"),user_path(@user)%>
+            <br><%= link_to @user.name, user_path(@user.id) %>
+          </td>
+          <td><%= link_to @book_data.title, book_path(@book_data.id) %></td>
+          <td><%= @book_data.body %></td>
+          <td id="fav_<%= @book_data.id %>"><%= render 'favorites/favorite', list: @book_data %></td>
+          <td id="com_num"><%= render 'book_comments/num', book_data: @book_data %></td>
+
+          <% if @user.id == current_user.id %>
+            <td><%= link_to "Edit", edit_book_path(@book_data.id), class: "btn btn-success btn-sm" %></td>
+            <td><%= link_to "Destroy", book_path(@book_data), method: :delete, "data-confirm" => "本当に消しますか?", class: "btn btn-danger btn-sm" %></td>
+          <% end %>
+        </tr>
+    </tbody>
+  </table>
+
+  <div class="com_<%= @book_data.id %>">
+    <%= render 'book_comments/comment', book_data: @book_data %>
+  </div>
+
+  <%= form_with(model:[@book_data, @book_comment], remote: true, method: :post) do |f| %>
+    <%= f.text_area :comment, class: "form-control field com_form", rows:'5' %>
+    <%= f.submit "送信" %>
+  <% end %>
 </div>

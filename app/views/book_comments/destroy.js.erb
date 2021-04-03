@@ -1,0 +1,2 @@
+$('.com_<%= @comment.book_id %>').html("<%= j(render "book_comments/comment", book_data: @book) %>")
+$('#com_num').html("<%= j(render 'book_comments/num', book_data: @book) %>")
