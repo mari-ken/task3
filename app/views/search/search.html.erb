@@ -1,0 +1,65 @@
+<table class="table">
+  <% if @range == '1' %>
+    <% if @users.count == 0 %>
+      <p>お探しのユーザーは存在しません</p>
+    <% else %>
+      <h2>Users search for "<%= @word %>"</h2>
+      <thead>
+        <tr>
+          <th>image</th>
+          <th>name</th>
+          <th colspan="4"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @users.each do |list| %>
+          <tr>
+            <td><%= attachment_image_tag list, :profile_image, fallback: "no_image.jpg", size: "40x40" %></td>
+            <td><%= list.name %></td>
+            <td>フォロー数:<%= list.followeds.count %></td>
+            <td>フォロワー数:<%= list.followers.count %></td>
+            <td>
+              <% if current_user != list %>
+                <% if list.followed_by?(current_user) %>
+                  <p><%=link_to "フォローを外す", user_relationships_path(list.id), method: :delete %></p>
+                <% else %>
+                  <%=link_to "フォローする", user_relationships_path(list.id), method: :post %>
+                <% end %>
+              <% end %>
+            </td>
+            <td><%= link_to "Show", user_path(list.id) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    <% end %>
+
+  <% else %>
+    <% if @books.count == 0 %>
+      <p>お探しの本は存在しません</p>
+    <% else %>
+      <h2>Books search for "<%= @word %>"</h2>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Title</th>
+          <th>Opinion</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @books.each do |list| %>
+          <tr>
+            <td><%= link_to attachment_image_tag(list.user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg", size: "40x40"),user_path(list.user)%></td>
+            <td><%= link_to list.title, book_path(list.id) %></td>
+            <td><%= list.body %></td>
+            <td id="fav_<%= list.id %>"><%= render 'favorites/favorite', list: list %></td>
+            <td>コメント数：<%= list.book_comments.count %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    <% end %>
+  <% end %>
+</table>

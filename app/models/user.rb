@@ -20,6 +20,20 @@ class User < ApplicationRecord
     passive_relationships.find_by(followed_id: user.id).present?
   end
 
+  def self.search(search,word)
+    if search == "perfect_match"
+      User.where(name: "#{word}")
+    elsif search == "forward_match"
+      User.where("name LIKE?","#{word}%")
+    elsif search == "backward_match"
+      User.where("name LIKE?","%#{word}")
+    elsif search == "partial_match"
+      User.where("name LIKE?","%#{word}%")
+    else
+      User.all
+    end
+  end
+
   validates :name,uniqueness: true,
                   length: { minimum: 2, maximum: 20 }
 
