@@ -4,20 +4,9 @@
   <h1>Book detail</h1>
   <table class="table">
     <tbody>
-        <tr>
-          <td><%= link_to attachment_image_tag(@user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg", size: "40x40"),user_path(@user)%>
-            <br><%= link_to @user.name, user_path(@user.id) %>
-          </td>
-          <td><%= link_to @book_data.title, book_path(@book_data.id) %></td>
-          <td><%= @book_data.body %></td>
-          <td id="fav_<%= @book_data.id %>"><%= render 'favorites/favorite', list: @book_data %></td>
-          <td id="com_num"><%= render 'book_comments/num', book_data: @book_data %></td>
-
-          <% if @user.id == current_user.id %>
-            <td><%= link_to "Edit", edit_book_path(@book_data.id), class: "btn btn-success btn-sm" %></td>
-            <td><%= link_to "Destroy", book_path(@book_data), method: :delete, "data-confirm" => "本当に消しますか?", class: "btn btn-danger btn-sm" %></td>
-          <% end %>
-        </tr>
+      <tr id="show_<%= @book_data.id %>">
+        <%= render 'books/show', {user: @book_data.user, book_data: @book_data} %>
+      </tr>
     </tbody>
   </table>
 

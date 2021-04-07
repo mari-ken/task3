@@ -1,0 +1,26 @@
+<td>
+  <%= link_to attachment_image_tag(book_data.user, :profile_image, fallback: "no_image.jpg", size: "40x40"),user_path(book_data.user)%>
+  <br><%= link_to book_data.user.name, user_path(book_data.user.id) %>
+</td>
+<td><%= link_to book_data.title, book_path(book_data.id) %></td>
+<td><%= book_data.body %></td>
+<td>
+  <% if book_data.favorited_by?(current_user) %>
+    <p>
+      <%= link_to book_favorites_path(book_data), method: :delete, remote: true, class: "fav-on" do %>
+        ♥<%= book_data.favorites.count %>
+      <% end %>
+    </p>
+  <% else %>
+  <p>
+    <%= link_to book_favorites_path(book_data), method: :post, remote: true, class: "fav-off" do %>
+      ♥<%= book_data.favorites.count %>
+    <% end %>
+  </p>
+  <% end %>
+</td>
+<td>コメント数：<%= book_data.book_comments.count %></td>
+<% if book_data.user.id == current_user.id %>
+  <td><%= link_to "Edit", edit_book_path(book_data.id), class: "btn btn-success btn-sm" %></td>
+  <td><%= link_to "Destroy", book_path(book_data), method: :delete, "data-confirm" => "本当に消しますか?", class: "btn btn-danger btn-sm" %></td>
+<% end %>

@@ -1,2 +1,2 @@
 $('.com_<%= @comment.book_id %>').html("<%= j(render partial: "book_comments/comment", locals: {book_data: @book, book_comment: @book_comment}) %>")
-$('#com_num').html("<%= j(render 'book_comments/num', book_data: @book) %>")
+$('#show_<%= @book.id %>').html("<%= j(render 'books/show', book_data: @book) %>")

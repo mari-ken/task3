@@ -1,1 +1,3 @@
-$('#fav_<%= @book.id %>').html("<%= j(render 'favorites/favorite', list: @book) %>");
+$('#post_<%= @book.id %>').html("<%= j(render 'books/post', list: @book) %>")
+
+$('#show_<%= @book.id %>').html("<%= j(render 'books/show', book_data: @book) %>")

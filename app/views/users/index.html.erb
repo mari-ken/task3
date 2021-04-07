@@ -7,31 +7,13 @@
     <tr>
       <th>image</th>
       <th>name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @users.each do |list| %>
-      <tr>
-        <td><%= attachment_image_tag list, :profile_image, fallback: "no_image.jpg", size: "40x40" %></td>
-        <td><%= list.name %></td>
-        <td>フォロー数:<%= list.followeds.count %></td>
-        <td>フォロワー数:<%= list.followers.count %></td>
-        <td>
-          <% if current_user != list %>
-            <% if list.followed_by?(current_user) %>
-              <p><%=link_to "フォローを外す", user_relationships_path(list.id), method: :delete %></p>
-            <% else %>
-              <%=link_to "フォローする", user_relationships_path(list.id), method: :post %>
-            <% end %>
-          <% end %>
-        </td>
-        <td><%= link_to "Show", user_path(list.id) %></td>
-      </tr>
+      <%= render 'users/list', list: list %>
     <% end %>
   </tbody>
 </table>
